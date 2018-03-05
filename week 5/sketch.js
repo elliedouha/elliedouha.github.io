@@ -43,19 +43,19 @@ function PaintMark(pos) {
 	}
 }
 
-function keyPressed() {
-	if (key === ' ') {
-		//savePaint();
-		this.display = function() {
-		noStroke();
-		fill(255, 0, 0);
-		ellipse(this.position.x, this.position.y, 60, 60);
-	}
-	}
-	if (key === 'L') {
-		//loadJSON('paint.json', parseJson);
-	}
-}
+// function keyPressed() {
+// 	if (key === ' ') {
+// 		//savePaint();
+// 		this.display = function() {
+// 		noStroke();
+// 		fill(255, 0, 0);
+// 		ellipse(this.position.x, this.position.y, 60, 60);
+// 	}
+// 	}
+// 	if (key === 'L') {
+// 		//loadJSON('paint.json', parseJson);
+// 	}
+// }
 
 function mouseDragged() {
 	positions.push(new PaintMark(createVector(mouseX, mouseY)));
