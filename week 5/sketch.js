@@ -1,7 +1,7 @@
 var positions = [];
 
 function setup() {
-	createCanvas(800, 800);
+	createCanvas(1300, 800);
 }
 
 function parseJson(data) {
