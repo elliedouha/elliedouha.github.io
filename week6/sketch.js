@@ -3,7 +3,7 @@
 // }
 
 // function preload(){
-// 	oBackground = loadImage('chaoticColor.jpg');
+// 	oBackground = loadImage('assets/chaoticColor.jpg');
 	
 // }
 
@@ -27,7 +27,7 @@ function setup() {
 }
 
 function draw() {
-  background(231, 190, 150);
+  background(255);
   scenes[currentScene].display();
 
   fill(0);
@@ -64,3 +64,132 @@ function keyPressed() {
     currentScene = newScene;
   }
 }
+
+////////////////////////////////////////////////////////////////
+
+var sceneState = {
+  INTRO: 0,
+  SAD: 1,
+  ANGRY: 2,
+  OVERWHELMED: 3
+};
+
+var currentState = sceneState.INTRO;
+
+var oBackgroundImg;
+
+var sceneData;
+
+var currentScene = 0;
+var scenes = [];
+
+
+
+
+function setup() {
+  createCanvas(400,600);
+
+  oBackgroundImg = loadImage("assets/chaoticColor.png");
+
+
+}
+
+function draw() {
+  drawScene(currentState);
+  checkTransition(currentState);
+}
+
+
+
+//SCENES
+
+
+  function drawScene(whichScene) {
+  switch (currentState) {
+    case sceneState.INTRO:
+      background(255);
+      textSize(20);
+      textAlign(CENTER, CENTER);
+      text("Find\nYour\n\"Zen\"", width/2, height/2);
+      break;
+    case sceneState.SAD:
+        background(0, 0, 255);
+        
+    case sceneState.ANGRY:
+        background(255, 0, 0);
+           
+    case sceneState.OVERWHELMED:
+       
+        background(0, 255, 0);
+
+    }
+      break;
+      default:
+      break;
+
+    }
+
+  }
+
+
+//TRANSITIONS
+
+
+  function checkTransition(whichScene) {
+  switch (whichScene) {
+    case sceneState.INTRO:
+      if (key == 'H') {
+        currentState = sceneState.SAD;
+        setUpScene(currentState);
+      }
+      break;
+    case sceneState.SAD:
+      if (key == 'S') {
+        
+          currentState++;
+          setUpScene(currentState);      
+        
+      }
+      break;
+    case sceneState.ANGRY:
+      if (key == 'A') {
+         {
+          currentState = sceneState.INTRO;      
+        setUpScene(currentState);
+      }
+    }
+      break;
+    case sceneState.OVERWHELMED:
+      if (key == 'O') {
+        
+          currentState++;
+          setUpScene(currentState);      
+        
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+
+function setUpScene(whichScene) {
+  switch (whichScene) {
+    case sceneState.INTRO:
+      break;
+    case sceneState.SAD:
+      break;
+    case sceneState.ANGRY:
+      break;
+      case sceneState.OVERWHELMED:
+      break;
+    default:
+      break;
+  }
+}
+
+
+function keyPressed() {
+  keyOn = true;
+}
+
