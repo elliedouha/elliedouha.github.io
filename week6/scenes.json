@@ -1,0 +1,24 @@
+{
+  "scenes": [
+    {
+      "sceneText": "This is the Home Page",
+      "options": ["go to scene 1","go to scene 1","go to scene 1"],
+      "nextScenes": [1, 2, 3]
+    },
+    {
+      "sceneText": "This is scene 1: Sad",
+      "options": ["go to scene 2: Angry", "go to scene 3: Overwhelmed", "go to Home Page"],
+      "nextScenes": [2, 3, 0]
+    },
+    {
+      "sceneText": "This is scene 2: Angry",
+      "options": ["go to scene 1: Sad", "go to scene 3: Overwhelmed", "go to Home Page"], 
+      "nextScenes": [1, 3, 0] 
+    },
+    {
+      "sceneText": "This is scene 3",
+      "options": ["go to scene 1: Sad", "go to scene 2: Overwhelmed", "go to Home Page"],
+      "nextScenes": [1, 2, 0]
+    }
+  ]
+}
