@@ -1,86 +1,52 @@
-var weather;
-//referencing Daniel Shiffman 10.6 API Query Vid on breaking down API's 
-//https://www.youtube.com/watch?v=4UoUqnjUC2c&list=PLRqwX-V7Uu6a-SQiI4RtIwuOrLJGnel0r&index=6
-var api = 'https://api.openweathermap.org/data/2.5/weather?q=';
-var apiKey = '&APPID=d3e8c610b6cb578b006a0fbd36a54820&units=metric';
-var input;
-
-var precip = [];
-
-var wTemp;
-var wHumidity;
-var wVisibility;
-
+var allBreeds = []; // used to store all the breeds data from the API request
+var breedSelectElement; // gives the user an option to select a breed
+var buttonElement; // gives the user a button to press after selecting the breed 
+var imgElement; // the reference to the image element we'll be using to show the doggo
+var selectedDoggo; // variable storing the string to the currently selected breed
 
 function setup() {
-  createCanvas(800,800);
+  noCanvas();
 
-  var button = select('#button');
-  button.mousePressed(citySwitch);
+  loadJSON('https://dog.ceo/api/breeds/list/all', gotAllBreeds);
 
-  input = select('#city');
+  createElement('h1', 'Welcome to Art and Design');
+  createElement('h3', 'Select an art style and press the button below to see the art:');
 
+  buttonElement = createButton('show me the art');
+  buttonElement.mousePressed(onButtonPressed);
 
-  for (var i = 0; i < 1000; i++) {
-    precip[i] = new Precip(wTemp,wHumidity,wVisibility);
-  }
+  breedSelectElement = createSelect();
+
+  createElement('br');
+  createElement('br');
+
+  imgElement = createImg('https://dog.ceo/api/img/stbernard/n02109525_3388.jpg');
 }
 
-function citySwitch(){
-  var url = api + input.value() + apiKey;
-  loadJSON(url, gotData);
+// callback for loading the initial data of all the breeds.
+// sets up the select element and its options.
+function gotAllBreeds(data) {
+  allBreeds = Object.keys(data.message);
+  for (var i = 0; i < allBreeds.length; i++) {
+    breedSelectElement.option(allBreeds[i]);
+  }
+  selectedDoggo = breedSelectElement.value();
+  breedSelectElement.changed(selectEvent);
 }
 
-function gotData(data){
-  console.log(data);
-  weather = data;
+// callback for changing the select element, on line 46
+function selectEvent() {
+  selectedDoggo = breedSelectElement.value();
+  console.log(selectedDoggo);
 }
 
-function draw() {
-
-  if (weather){
-
-    var temp = weather.main.temp;
-    var wind = weather.wind.speed;
-    var visibility = weather.visibility;
-    var cloud = weather.clouds.all;
-    var humidity = weather.main.humidity;
-    background(255+cloud, 242+cloud, 188+cloud);
-     for (var i = 0; i < precip.length; i++) {
-    precip[i].update(temp,humidity,visibility);
-    precip[i].display(temp,humidity,visibility);
-  }
-    noStroke();
-    fill(255);
-    textSize(32);
-    text('lon ' + weather.coord.lon, 10, 30);
-    text('lat ' + weather.coord.lat, 10, 70);
-  }
+// callback for pressing the button, and sending a request to the API to give back a picture of the selected breed
+function onButtonPressed() {
+  loadJSON('https://dog.ceo/api/breed/' + selectedDoggo + '/images/random', onGotDoggo);
 }
 
-function Precip(wTemp,wHumidity,wVisibility) {
-  
-  this.x = random(10*100);
-  this.y = random(-500, -50);
-  this.pLength = map(10, 0, 20, 10, 20);
-  this.speed = map(10, 0, 20, 1, 20);
-
-  this.update = function() {
-    this.y = this.y + this.speed;
-    var grav = map(random(0,20), 0, 20, 0, 0.2);
-    this.speed = this.speed + grav;
-
-    if (this.y > height) {
-      this.y = random(-200, -100);
-      this.speed = map(10, 0, 20, 4, 10);
-    }
-  }
-
-  this.display = function() {
-    var pWide = map(10, 0, 20, 1, 5);
-    strokeWeight(pWide);
-    stroke(116, 167, 247,255);
-    line(this.x, this.y, this.x, this.y+this.pLength);
-  }
-  
+// callback for line 58, when the API request is completed, display the new image and delete the old one.
+function onGotDoggo(data) {
+  imgElement.remove();
+  imgElement = createImg(data.message);
 }
