@@ -1,0 +1,28 @@
+{
+  "scenes": [
+    {
+      "sceneText": "1",
+      "Click": ["Space bar"],
+      "nextScenes": [1],
+
+    },
+    {
+      "sceneText": "2",
+      "options": ["Space bar"],
+      "nextScenes": [2],
+
+    },
+    {
+      "sceneText": "3",
+      "options": ["Space bar"], 
+      "nextScenes": [3],
+
+    },
+    {
+      "sceneText": "4",
+      "options": ["Space bar"],
+      "nextScenes": [0],
+
+    }
+  ]
+}
