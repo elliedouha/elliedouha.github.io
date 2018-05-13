@@ -1,58 +1,97 @@
-var api = 'http://api.openweathermap.org/data/2.5/weather?q=';
-var city = 'Prague';
-var apiKey = '&APPID=5e0f8c3ab04304042cdd7ac164757d2c';
 
-var sceneData;
-
-var currentScene = 0;
-var oldScene =0;
+var currentScene = -1;
 var scenes = [];
+var sceneSprites = [];
+var showingText = false;
+var finished = false;
 
-function preload() {
-  sceneData = loadJSON('scenes.json');
-}
+var spriteSize = 60;
 
 function setup() {
-  createCanvas(1000,1000);
-  var url = api + city + apiKey + units;
-  loadJSON(url, gotData, 'jsonp');
-
+  var test = loadJSON('scenes.json', gotSceneData);
+  bgImg = loadImage("assets/ocean.jpg");
+  createCanvas(1200,600);
 }
 
+function gotSceneData(data) {
+  scenes = data.scenes;
+  console.log(scenes);
+  currentScene = 0;
+  loadScene();
+}
+
+function loadScene(){
+  console.log("LOADING!!");
+  sceneSprites = [];
+  showingText = false;
+  var scene = scenes[currentScene];
+  for(var i=0; i<scene.num; i++){
+    var sprite = createSprite(0, 0, 70, 50);
+    sprite.addImage(loadImage(scene.img));
+    sprite.position.x = random(width);
+    sprite.position.y = random(height);
+    sceneSprites.push(sprite);
+
+    console.log("Adding sprite " + scene.img + " X: " + sprite.position.x + " Y: " + sprite.position.y);
+  } 
+}
+
+function mouseCollision(){
+  for(var i=0; i<sceneSprites.length; i++){
+    var sprite = sceneSprites[i];
+
+    if(mouseX > sprite.position.x - spriteSize/2 && mouseX < sprite.position.x + spriteSize/2 && mouseY > sprite.position.y - spriteSize/2 && mouseY < sprite.position.y + spriteSize/2){
+      sprite.remove();
+      sceneSprites.splice(i, 1);
+      console.log("Collision");
+
+
+    }
+
+  }
+}
 
 function draw() {
-  
+  background (bgImg);
+  fill(255);
+  textSize(20);
 
-    scenes[currentScene].display();
-    if (currentScene != oldScene){
-    oldScene = currentScene;
-}
-fill(0);
-  textSize(24);
-  //text("press the option number to advance to the indicated scene", 50, 500);
-  text("Throwing away a new plastic bottle everyday leads to this:", 200, 20);
+  if (currentScene >= 0) {
+    drawSprites();
+    mouseCollision();
+    if(sceneSprites.length == 0 && currentScene == scenes.length -1){
+      finished = true;
 
-  
-}
+      
+    }else if(sceneSprites.length == 0){
+      showingText = true;
+    }
+  }
+  if(showingText == true){
+    text(scenes[currentScene].text, 100, 200);
 
-function CreateScenesFromData(data) {
-  for (var i = 0; i < data.length; i++) {
-    scenes.push(new Scene(data[i].sceneText, data[i].options, data[i].nextScenes, data[i], data[i], data[i]))
+  }
+  if(finished == true){
+    textSize(40);
+    fill(128 + sin(frameCount*0.1) * 128);
+    textAlign(CENTER, CENTER);
+    text("Tadaa!! Congratulations, you've cleaned up this virtual ocean, now clean up your real ocean by recycling your upcoming waste!", 460, 130, 400, 400);
   }
 }
 
 function keyPressed() {
   var numberPressed = parseInt(key);
-  var newScene = scenes[currentScene].nextScenes[numberPressed - 1];
-  if (newScene !== undefined) {
-    oldScene = currentScene;
-    currentScene = newScene;
-  }
+  currentScene = numberPressed;
 }
 
 function mousePressed() {
-  
-  var s = createSprite(mouseX, mouseY, 30, 30);
-  s.velocity.x = random(-5, 5);
-  s.velocity.y = random(-5, 5);
+  if(showingText == true){
+    currentScene += 1;
+      loadScene();
+  }
+  if(finished == true){
+    currentScene = 0;
+    finished = false;
+    loadScene();
+  }
 }

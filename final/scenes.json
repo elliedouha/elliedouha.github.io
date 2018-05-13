@@ -1,28 +1,20 @@
 {
-  "scenes": [
-    {
-      "sceneText": "1",
-      "Click": ["Space bar"],
-      "nextScenes": [1],
-
-    },
-    {
-      "sceneText": "2",
-      "options": ["Space bar"],
-      "nextScenes": [2],
-
-    },
-    {
-      "sceneText": "3",
-      "options": ["Space bar"], 
-      "nextScenes": [3],
-
-    },
-    {
-      "sceneText": "4",
-      "options": ["Space bar"],
-      "nextScenes": [0],
-
-    }
+ "scenes" : [
+  {
+    "img": "assets/turtle_small.jpg",
+    "num": 5,
+    "text": "8 million metric tons of our plastic waste enter the oceans from land each year, from everyday items such as bottles, wrappers, straws or bags. (click anywhere on the screen to continue)"
+  },
+  { 
+    "img": "assets/bottle.jpg",
+    "num": 5,
+    "text": "People in the U.S. open 1,000 bottles of water every second and put 60 million plastic water bottles in the trash each year, most of which end up in waterways and eventually into the ocean. (click anywhere on the screen to continue)"
+  },
+  {
+    "img": "assets/trash.jpg",
+    "num": 5,
+    "text": "(click anywhere on the screen to continue)"   
+  }
   ]
 }
+
