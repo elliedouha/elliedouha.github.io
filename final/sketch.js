@@ -9,7 +9,7 @@ var spriteSize = 60;
 
 function setup() {
   var test = loadJSON('scenes.json', gotSceneData);
-  bgImg = loadImage("assets/ocean.jpg");
+  bgImg = loadImage("assets/ocean.png");
   createCanvas(1200,600);
 }
 
@@ -54,7 +54,7 @@ function mouseCollision(){
 function draw() {
   background (bgImg);
   fill(255);
-  textSize(20);
+  textSize(35);
 
   if (currentScene >= 0) {
     drawSprites();
@@ -68,14 +68,15 @@ function draw() {
     }
   }
   if(showingText == true){
-    text(scenes[currentScene].text, 100, 200);
+    textAlign(CENTER, CENTER);
+    text(scenes[currentScene].text, 280, 20, 800, 600);
 
   }
   if(finished == true){
     textSize(40);
     fill(128 + sin(frameCount*0.1) * 128);
     textAlign(CENTER, CENTER);
-    text("Tadaa!! Congratulations, you've cleaned up this virtual ocean, now clean up your real ocean by recycling your upcoming waste!", 460, 130, 400, 400);
+    text("Tadaa!! Congratulations, you've cleaned up this virtual ocean, now clean up your real ocean by recycling your upcoming waste! And use a resuable water bottle!", 460, 130, 410, 450);
   }
 }
 
