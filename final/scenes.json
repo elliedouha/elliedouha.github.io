@@ -2,17 +2,17 @@
  "scenes" : [
   {
     "img": "assets/bag.jpg",
-    "num": 5,
+    "num": 6,
     "text": "8 million metric tons of our plastic waste enter the oceans from land each year, from everyday items such as bottles, wrappers, straws or bags. (click anywhere on the screen to continue)"
   },
   { 
     "img": "assets/plastic.jpg",
-    "num": 5,
+    "num": 10,
     "text": "People in the U.S. open 1,000 bottles of water every second and put 60 million plastic water bottles in the trash each year, most of which end up in waterways and eventually into the ocean. (click anywhere on the screen to continue)"
   },
   {
     "img": "assets/wrapper.jpg",
-    "num": 5,
+    "num": 8,
     "text": "(click anywhere on the screen to continue)"   
   }
   ]
